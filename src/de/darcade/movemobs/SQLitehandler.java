@@ -28,7 +28,7 @@ public class SQLitehandler extends JavaPlugin {
 			System.out.println("[MoveMobs] Opened Database successfully");
 
 			stmt = c.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS movemobtable (username TEXT , mob TEXT, PRIMARY KEY(username));";
+			String sql = "CREATE TABLE IF NOT EXISTS movemobtable (username TEXT , mob TEXT, horsecolor TEXT , horsestyle TEXT , horsevariant TEXT , PRIMARY KEY(username));";
 
 			stmt.executeUpdate(sql);
 			stmt.close();
@@ -129,7 +129,55 @@ public class SQLitehandler extends JavaPlugin {
 			stmt = c.createStatement();
 
 			// TODO prevent SQL Injections
-			String sql = "UPDATE movemobtable SET mob='NULL' WHERE username=\"" + username + "\";";
+			String sql = "UPDATE movemobtable SET mob='NULL', horsecolor='NULL', horsestyle='NULL' , horsevariant='NULL' WHERE username=\"" + username + "\";";
+			
+
+			stmt.executeUpdate(sql);
+
+			stmt.close();
+			c.commit();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+	}
+	
+	public void setnewhorse(String username, String mob, String color, String style, String variant) {
+		Connection c = null;
+		Statement stmt = null;
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection(databasedir);
+			c.setAutoCommit(false);
+			stmt = c.createStatement();
+
+			// TODO prevent SQL Injections
+			String sql = "INSERT INTO movemobtable (username, mob, horsecolor, horsestyle, horsevariant) VALUES('" + username + "', '" + mob + "', '" + color + "', '" + style + "', '" + variant +"');";
+			
+
+			stmt.executeUpdate(sql);
+
+			stmt.close();
+			c.commit();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+	}
+	
+	public void updatehorse(String username, String mob, String color, String style, String variant) {
+		Connection c = null;
+		Statement stmt = null;
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection(databasedir);
+			c.setAutoCommit(false);
+			stmt = c.createStatement();
+
+			// TODO prevent SQL Injections
+			String sql = "UPDATE movemobtable SET mob='" + mob + "', horsecolor='" + color + "', horsestyle='" + style + "' , horsevariant='" + variant + "' WHERE username=\"" + username + "\";";
 			
 
 			stmt.executeUpdate(sql);
