@@ -51,7 +51,6 @@ public class killlistener implements Listener {
 				if (event.getEntityType() == EntityType.HORSE){
 					Horse horseentity = (Horse) event.getEntity();
 					horseentity.setBaby();
-					horseentity.
 					
 				}
 				
