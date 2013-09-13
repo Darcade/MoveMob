@@ -38,6 +38,9 @@ public class movemobs extends JavaPlugin {
 
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String cmdLabel, String[] args) {
+		Player p = (Player) sender;
+		
+		String username = p.getDisplayName();
 		
 		//load informations from the config
 		String waiting = this.getConfig().getString("Message.waiting");
@@ -46,7 +49,7 @@ public class movemobs extends JavaPlugin {
 		String nomob = this.getConfig().getString("Message.nomob");
 		String spawningmob = this.getConfig().getString("Message.spawningmob");
 		
-		Player p = (Player) sender;
+
 		if (cmd.getName().equalsIgnoreCase("movemob")) {
 			if (p.hasPermission("movemob")) {
 				if (args.length == 0) {
@@ -54,15 +57,17 @@ public class movemobs extends JavaPlugin {
 					p.sendMessage(ChatColor.RED + "Usage: /movemob [pickup/place]");
 				} else {
 					if (args[0].equalsIgnoreCase("pickup")) {
-
+						
+						String mob = sqlitehandler.showmob(username);
+						
 						p.sendMessage(ChatColor.GREEN
 								+ waiting);
 
-						if (sqlitehandler.showmob(p.getDisplayName()).equals(null)) {
+						if (mob == null) {
 							getServer().getPluginManager().registerEvents(
 									new killlistener(p, this, true), this);
 						} else {
-							if (sqlitehandler.showmob(p.getDisplayName()).equalsIgnoreCase("NULL")) {
+							if (mob.equalsIgnoreCase("NULL")) {
 								getServer().getPluginManager().registerEvents(
 										new killlistener(p, this, false), this);
 							} else {
