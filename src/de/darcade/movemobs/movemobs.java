@@ -99,7 +99,7 @@ public class movemobs extends JavaPlugin {
 								spawnedhorse.setStyle(Style.valueOf(playershorse[1]));
 								spawnedhorse.setVariant(Variant.valueOf(playershorse[2]));
 							} else {
-								p.getWorld().spawnEntity(p.getLocation(), EntityType.fromName(sqlitehandler.showmob(p.getDisplayName())));
+								p.getWorld().spawnEntity(p.getLocation(), EntityType.valueOf(sqlitehandler.showmob(p.getDisplayName())));
 							}
 							sqlitehandler.clearuser(p.getDisplayName());
 						}
