@@ -5,13 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import org.bukkit.entity.Creature;
-import org.bukkit.entity.CreatureType;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.Horse.Color;
-import org.bukkit.entity.Horse.Style;
-import org.bukkit.entity.Horse.Variant;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SQLitehandler extends JavaPlugin {
@@ -114,7 +107,6 @@ public class SQLitehandler extends JavaPlugin {
 			// TODO prevent SQL Injections
 			String sql = "INSERT INTO movemobtable (username, mob) VALUES('"
 					+ username + "', '" + mob + "');";
-			
 
 			stmt.executeUpdate(sql);
 
@@ -125,6 +117,7 @@ public class SQLitehandler extends JavaPlugin {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 	}
+
 	public void clearuser(String username) {
 		Connection c = null;
 		Statement stmt = null;
@@ -136,8 +129,8 @@ public class SQLitehandler extends JavaPlugin {
 			stmt = c.createStatement();
 
 			// TODO prevent SQL Injections
-			String sql = "UPDATE movemobtable SET mob='NULL', horsecolor='NULL', horsestyle='NULL' , horsevariant='NULL' WHERE username=\"" + username + "\";";
-			
+			String sql = "UPDATE movemobtable SET mob='NULL', horsecolor='NULL', horsestyle='NULL' , horsevariant='NULL' WHERE username=\""
+					+ username + "\";";
 
 			stmt.executeUpdate(sql);
 
@@ -148,8 +141,9 @@ public class SQLitehandler extends JavaPlugin {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 	}
-	
-	public void setnewhorse(String username, String mob, String color, String style, String variant) {
+
+	public void setnewhorse(String username, String mob, String color,
+			String style, String variant) {
 		Connection c = null;
 		Statement stmt = null;
 
@@ -160,8 +154,15 @@ public class SQLitehandler extends JavaPlugin {
 			stmt = c.createStatement();
 
 			// TODO prevent SQL Injections
-			String sql = "INSERT INTO movemobtable (username, mob, horsecolor, horsestyle, horsevariant) VALUES('" + username + "', '" + mob + "', '" + color + "', '" + style + "', '" + variant +"');";
-			
+			String sql = "INSERT INTO movemobtable (username, mob, horsecolor, horsestyle, horsevariant) VALUES('"
+					+ username
+					+ "', '"
+					+ mob
+					+ "', '"
+					+ color
+					+ "', '"
+					+ style
+					+ "', '" + variant + "');";
 
 			stmt.executeUpdate(sql);
 
@@ -172,8 +173,9 @@ public class SQLitehandler extends JavaPlugin {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 	}
-	
-	public void updatehorse(String username, String mob, String color, String style, String variant) {
+
+	public void updatehorse(String username, String mob, String color,
+			String style, String variant) {
 		Connection c = null;
 		Statement stmt = null;
 
@@ -184,8 +186,10 @@ public class SQLitehandler extends JavaPlugin {
 			stmt = c.createStatement();
 
 			// TODO prevent SQL Injections
-			String sql = "UPDATE movemobtable SET mob='" + mob + "', horsecolor='" + color + "', horsestyle='" + style + "' , horsevariant='" + variant + "' WHERE username=\"" + username + "\";";
-			
+			String sql = "UPDATE movemobtable SET mob='" + mob
+					+ "', horsecolor='" + color + "', horsestyle='" + style
+					+ "' , horsevariant='" + variant + "' WHERE username=\""
+					+ username + "\";";
 
 			stmt.executeUpdate(sql);
 
@@ -196,20 +200,18 @@ public class SQLitehandler extends JavaPlugin {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 	}
-	
+
 	/*
 	 * This function will output a array.
 	 * 
-	 * Thats how the declaration of the index looks like
-	 *  0 = color
-	 *  1 = style
-	 *  2 = variant
+	 * Thats how the declaration of the index looks like 0 = color 1 = style 2 =
+	 * variant
 	 */
 	public String[] gethorse(String username) {
 
-		//Horse horse =  null;
+		// Horse horse = null;
 		String[] horse = {};
-		
+
 		Connection c = null;
 		Statement stmt = null;
 		String color = null, style = null, variant = null;
@@ -230,16 +232,11 @@ public class SQLitehandler extends JavaPlugin {
 				style = rs.getString("horsestyle");
 				variant = rs.getString("horsevariant");
 			}
-			System.out.println("TEST1");
-			
-			
+
 			horse[0] = color;
 			horse[1] = style;
 			horse[2] = variant;
-			//horse.setColor(Color.valueOf(color));
-			//horse.setStyle(Style.valueOf(style));
-			//horse.setVariant(Variant.valueOf(variant));
-			System.out.println("TEST2");
+
 			rs.close();
 			stmt.close();
 			c.close();
