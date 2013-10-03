@@ -11,7 +11,7 @@ config-version: 1
 
 #message
 Message:
-  waiting: Waiting for you to kill the mob that you want to move.
+  waiting: Waiting for you to hit the mob that you want to move.
   alreadydone: You already picked up a mob.
   fewargs: Too few Arguments.
   nomob: You didn't picked up any mob.
