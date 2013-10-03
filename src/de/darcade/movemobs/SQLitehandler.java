@@ -196,11 +196,19 @@ public class SQLitehandler extends JavaPlugin {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 	}
-	//FIXME 
 	
-	public Horse gethorse(String username) {
+	/*
+	 * This function will output a array.
+	 * 
+	 * Thats how the declaration of the index looks like
+	 *  0 = color
+	 *  1 = style
+	 *  2 = variant
+	 */
+	public String[] gethorse(String username) {
 
 		//Horse horse =  null;
+		String[] horse = {};
 		
 		Connection c = null;
 		Statement stmt = null;
@@ -224,10 +232,13 @@ public class SQLitehandler extends JavaPlugin {
 			}
 			System.out.println("TEST1");
 			
-			Horse horse;
-			horse.setColor(Color.valueOf(color));
-			horse.setStyle(Style.valueOf(style));
-			horse.setVariant(Variant.valueOf(variant));
+			
+			horse[0] = color;
+			horse[1] = style;
+			horse[2] = variant;
+			//horse.setColor(Color.valueOf(color));
+			//horse.setStyle(Style.valueOf(style));
+			//horse.setVariant(Variant.valueOf(variant));
 			System.out.println("TEST2");
 			rs.close();
 			stmt.close();
