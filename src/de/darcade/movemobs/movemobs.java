@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -79,12 +80,21 @@ public class movemobs extends JavaPlugin {
 
 					}
 					else if (args[0].equalsIgnoreCase("place")){
-						if (sqlitehandler.showmob(p.getDisplayName()).equals(null) || sqlitehandler.showmob(p.getDisplayName()).equalsIgnoreCase("NULL")) {
+						if (sqlitehandler.showmob(p.getDisplayName()) == null || sqlitehandler.showmob(p.getDisplayName()).equalsIgnoreCase("NULL")) {
 							p.sendMessage(nomob);
 						} else {
 							p.sendMessage(ChatColor.GREEN + spawningmob);
 							if (sqlitehandler.showmob(p.getDisplayName()).equalsIgnoreCase("HORSE")){
-								p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+								Horse playershorse = sqlitehandler.gethorse(username);
+								
+								if (playershorse == null)
+									p.sendMessage("FAIL");
+								
+								//playershorse.teleport(p.getLocation());
+								Horse spawnedhorse = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+								spawnedhorse.setColor(playershorse.getColor());
+								spawnedhorse.setStyle(playershorse.getStyle());
+								spawnedhorse.setVariant(playershorse.getVariant());
 							} else {
 								p.getWorld().spawnEntity(p.getLocation(), EntityType.fromName(sqlitehandler.showmob(p.getDisplayName())));
 							}

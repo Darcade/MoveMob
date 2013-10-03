@@ -5,6 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.Horse.Color;
+import org.bukkit.entity.Horse.Style;
+import org.bukkit.entity.Horse.Variant;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SQLitehandler extends JavaPlugin {
@@ -188,5 +195,47 @@ public class SQLitehandler extends JavaPlugin {
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
+	}
+	//FIXME 
+	
+	public Horse gethorse(String username) {
+
+		//Horse horse =  null;
+		
+		Connection c = null;
+		Statement stmt = null;
+		String color = null, style = null, variant = null;
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection(databasedir);
+			c.setAutoCommit(false);
+
+			stmt = c.createStatement();
+			String sql = "SELECT * FROM movemobtable WHERE username=\""
+					+ username + "\";";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				color = rs.getString("horsecolor");
+				style = rs.getString("horsestyle");
+				variant = rs.getString("horsevariant");
+			}
+			System.out.println("TEST1");
+			
+			Horse horse;
+			horse.setColor(Color.valueOf(color));
+			horse.setStyle(Style.valueOf(style));
+			horse.setVariant(Variant.valueOf(variant));
+			System.out.println("TEST2");
+			rs.close();
+			stmt.close();
+			c.close();
+
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return horse;
 	}
 }
