@@ -16,8 +16,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class movemobs extends JavaPlugin {
 
-	// String databasedir = this.getDataFolder().getAbsolutePath().toString();
-	String databasedir = "jdbc:sqlite:plugins/MoveMobs/database.sqlite";
+	String databasedir = "jdbc:sqlite:" + this.getDataFolder().getAbsolutePath().toString();
+	//String databasedir = "jdbc:sqlite:plugins/MoveMobs/database.sqlite";
 
 	SQLitehandler sqlitehandler = new SQLitehandler(databasedir);
 

@@ -209,7 +209,6 @@ public class SQLitehandler extends JavaPlugin {
 	 */
 	public String[] gethorse(String username) {
 
-		// Horse horse = null;
 		String[] horse = new String[3];
 
 		Connection c = null;
