@@ -8,3 +8,4 @@ commands:
           description: The "pickup" argument waits for a player to hit a mob, and the place argument places the picked up mob.
           usage: /<command> [pickup/place]
           permission: movemob
+          
