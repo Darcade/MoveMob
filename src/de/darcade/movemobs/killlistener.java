@@ -16,16 +16,19 @@ public class killlistener implements Listener {
 	private Player p = null;
 	private Plugin plugin;
 	private boolean newuser;
-	// String databasedir = plugin.getDataFolder().getAbsolutePath();
-	String databasedir = "jdbc:sqlite:plugins/MoveMobs/database.sqlite";
-	SQLitehandler sqlitehandler = new SQLitehandler(databasedir);
+	private SQLitehandler sqlitehandler;
 
-	public killlistener(Player p, Plugin plugin, boolean newuser) {
+
+	public killlistener(Player p, Plugin plugin, boolean newuser, SQLitehandler sqlitehandler) {
 		this.p = p;
 		this.plugin = plugin;
 		this.newuser = newuser;
+		this.sqlitehandler = sqlitehandler;
 	}
 
+
+	
+	
 	private boolean checkforwhitelist(String vartocheck) {
 		List<String> whitelist = plugin.getConfig().getStringList(
 				"mobwhitelist");

@@ -15,11 +15,11 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class movemobs extends JavaPlugin {
-
-	String databasedir = "jdbc:sqlite:" + this.getDataFolder().getAbsolutePath().toString();
+	
+	static String databasedir;
 	//String databasedir = "jdbc:sqlite:plugins/MoveMobs/database.sqlite";
 
-	SQLitehandler sqlitehandler = new SQLitehandler(databasedir);
+	static SQLitehandler sqlitehandler;
 
 	@Override
 	public void onDisable() {
@@ -33,7 +33,11 @@ public class movemobs extends JavaPlugin {
 		if (!success) {
 			System.out.println("[MoveMobs] could not create plugin directory");
 		}
+		
+		databasedir = "jdbc:sqlite:" + this.getDataFolder().getAbsolutePath().toString() + "/database.sqlite";
+		sqlitehandler = new SQLitehandler(databasedir);
 		sqlitehandler.init();
+		
 		this.createConfig();
 		PluginDescriptionFile descFile = this.getDescription();
 		System.out.println("[MoveMobs] plugin enabled!");
@@ -69,11 +73,11 @@ public class movemobs extends JavaPlugin {
 
 						if (mob == null) {
 							getServer().getPluginManager().registerEvents(
-									new killlistener(p, this, true), this);
+									new killlistener(p, this, true, sqlitehandler), this);
 						} else {
 							if (mob.equalsIgnoreCase("NULL")) {
 								getServer().getPluginManager().registerEvents(
-										new killlistener(p, this, false), this);
+										new killlistener(p, this, false, sqlitehandler), this);
 							} else {
 								p.sendMessage(ChatColor.RED
 										+ triedagain);
