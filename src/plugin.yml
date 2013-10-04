@@ -5,7 +5,7 @@ author: Darcade
 website: http://darcade.de/
 commands:
      movemob:
-          description: The "pickup" argument waits for a player to hit a mob, and the place argument places the picked up mob.
+          description: The "pickup" option waits for a player to hit a mob, and the place argument places the picked up mob.
           usage: /<command> [pickup/place]
           permission: movemob
           
