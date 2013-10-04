@@ -5,6 +5,6 @@ author: Darcade
 website: http://darcade.de/
 commands:
      movemob:
-          description: waits for a player to kill a mob and them gives him an egg
-          usage: /<command>
+          description: The "pickup" argument waits for a player to hit a mob, and the place argument places the picked up mob.
+          usage: /<command> [pickup/place]
           permission: movemob
