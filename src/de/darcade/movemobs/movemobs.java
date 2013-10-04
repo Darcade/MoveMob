@@ -15,9 +15,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class movemobs extends JavaPlugin {
-	
+
 	static String databasedir;
-	//String databasedir = "jdbc:sqlite:plugins/MoveMobs/database.sqlite";
+	// String databasedir = "jdbc:sqlite:plugins/MoveMobs/database.sqlite";
 
 	static SQLitehandler sqlitehandler;
 
@@ -33,11 +33,13 @@ public class movemobs extends JavaPlugin {
 		if (!success) {
 			System.out.println("[MoveMobs] could not create plugin directory");
 		}
-		
-		databasedir = "jdbc:sqlite:" + this.getDataFolder().getAbsolutePath().toString() + "/database.sqlite";
+
+		databasedir = "jdbc:sqlite:"
+				+ this.getDataFolder().getAbsolutePath().toString()
+				+ "/database.sqlite";
 		sqlitehandler = new SQLitehandler(databasedir);
 		sqlitehandler.init();
-		
+
 		this.createConfig();
 		PluginDescriptionFile descFile = this.getDescription();
 		System.out.println("[MoveMobs] plugin enabled!");
@@ -47,63 +49,74 @@ public class movemobs extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String cmdLabel, String[] args) {
 		Player p = (Player) sender;
-		
+
 		String username = p.getDisplayName();
-		
-		//load informations from the config
+
+		// load informations from the config
 		String waiting = this.getConfig().getString("Message.waiting");
 		String triedagain = this.getConfig().getString("Message.alreadydone");
 		String fewargs = this.getConfig().getString("Message.fewargs");
 		String nomob = this.getConfig().getString("Message.nomob");
 		String spawningmob = this.getConfig().getString("Message.spawningmob");
-		
 
 		if (cmd.getName().equalsIgnoreCase("movemob")) {
 			if (p.hasPermission("movemob")) {
 				if (args.length == 0) {
 					p.sendMessage(ChatColor.RED + fewargs);
-					p.sendMessage(ChatColor.RED + "Usage: /movemob [pickup/place]");
+					p.sendMessage(ChatColor.RED
+							+ "Usage: /movemob [pickup/place]");
 				} else {
 					if (args[0].equalsIgnoreCase("pickup")) {
-						
+
 						String mob = sqlitehandler.showmob(username);
-						
-						p.sendMessage(ChatColor.GREEN
-								+ waiting);
+
+						p.sendMessage(ChatColor.GREEN + waiting);
 
 						if (mob == null) {
 							getServer().getPluginManager().registerEvents(
-									new killlistener(p, this, true, sqlitehandler), this);
+									new killlistener(p, this, true,
+											sqlitehandler), this);
 						} else {
 							if (mob.equalsIgnoreCase("NULL")) {
 								getServer().getPluginManager().registerEvents(
-										new killlistener(p, this, false, sqlitehandler), this);
+										new killlistener(p, this, false,
+												sqlitehandler), this);
 							} else {
-								p.sendMessage(ChatColor.RED
-										+ triedagain);
+								p.sendMessage(ChatColor.RED + triedagain);
 							}
 
 						}
 
-					}
-					else if (args[0].equalsIgnoreCase("place")){
-						if (sqlitehandler.showmob(p.getDisplayName()) == null || sqlitehandler.showmob(p.getDisplayName()).equalsIgnoreCase("NULL")) {
+					} else if (args[0].equalsIgnoreCase("place")) {
+						if (sqlitehandler.showmob(p.getDisplayName()) == null
+								|| sqlitehandler.showmob(p.getDisplayName())
+										.equalsIgnoreCase("NULL")) {
 							p.sendMessage(nomob);
 						} else {
 							p.sendMessage(ChatColor.GREEN + spawningmob);
-							if (sqlitehandler.showmob(p.getDisplayName()).equalsIgnoreCase("HORSE")){
-								String[] playershorse = sqlitehandler.gethorse(username);
-								
+							if (sqlitehandler.showmob(p.getDisplayName())
+									.equalsIgnoreCase("HORSE")) {
+								String[] playershorse = sqlitehandler
+										.gethorse(username);
+
 								if (playershorse.length == 0)
 									p.sendMessage("FAIL");
-								
-								//playershorse.teleport(p.getLocation());
-								Horse spawnedhorse = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
-								spawnedhorse.setColor(Color.valueOf(playershorse[0]));
-								spawnedhorse.setStyle(Style.valueOf(playershorse[1]));
-								spawnedhorse.setVariant(Variant.valueOf(playershorse[2]));
+
+								// playershorse.teleport(p.getLocation());
+								Horse spawnedhorse = (Horse) p.getWorld()
+										.spawnEntity(p.getLocation(),
+												EntityType.HORSE);
+								spawnedhorse.setColor(Color
+										.valueOf(playershorse[0]));
+								spawnedhorse.setStyle(Style
+										.valueOf(playershorse[1]));
+								spawnedhorse.setVariant(Variant
+										.valueOf(playershorse[2]));
 							} else {
-								p.getWorld().spawnEntity(p.getLocation(), EntityType.valueOf(sqlitehandler.showmob(p.getDisplayName())));
+								p.getWorld().spawnEntity(
+										p.getLocation(),
+										EntityType.valueOf(sqlitehandler
+												.showmob(p.getDisplayName())));
 							}
 							sqlitehandler.clearuser(p.getDisplayName());
 						}
@@ -116,9 +129,7 @@ public class movemobs extends JavaPlugin {
 
 		return true;
 	}
-	
-	
-	
+
 	private void createConfig() {
 		this.saveDefaultConfig();
 		System.out.println("[MoveMobs] checking config...");

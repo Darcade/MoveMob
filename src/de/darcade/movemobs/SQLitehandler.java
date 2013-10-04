@@ -28,7 +28,7 @@ public class SQLitehandler extends JavaPlugin {
 			System.out.println("[MoveMobs] Opened Database successfully");
 
 			stmt = c.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS movemobtable (username TEXT , mob TEXT, horsecolor TEXT , horsestyle TEXT , horsevariant TEXT , PRIMARY KEY(username));";
+			String sql = "CREATE TABLE IF NOT EXISTS movemobtable (username TEXT , mob TEXT , owner TEXT , horsecolor TEXT , horsestyle TEXT , horsevariant TEXT , PRIMARY KEY(username));";
 
 			stmt.executeUpdate(sql);
 			stmt.close();
@@ -213,7 +213,6 @@ public class SQLitehandler extends JavaPlugin {
 
 		Connection c = null;
 		Statement stmt = null;
-		String color = null, style = null, variant = null;
 
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -227,14 +226,10 @@ public class SQLitehandler extends JavaPlugin {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				color = rs.getString("horsecolor");
-				style = rs.getString("horsestyle");
-				variant = rs.getString("horsevariant");
+				horse[0] = rs.getString("horsecolor");
+				horse[1] = rs.getString("horsestyle");
+				horse[2] = rs.getString("horsevariant");
 			}
-
-			horse[0] = color;
-			horse[1] = style;
-			horse[2] = variant;
 
 			rs.close();
 			stmt.close();

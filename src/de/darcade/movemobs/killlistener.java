@@ -18,17 +18,14 @@ public class killlistener implements Listener {
 	private boolean newuser;
 	private SQLitehandler sqlitehandler;
 
-
-	public killlistener(Player p, Plugin plugin, boolean newuser, SQLitehandler sqlitehandler) {
+	public killlistener(Player p, Plugin plugin, boolean newuser,
+			SQLitehandler sqlitehandler) {
 		this.p = p;
 		this.plugin = plugin;
 		this.newuser = newuser;
 		this.sqlitehandler = sqlitehandler;
 	}
 
-
-	
-	
 	private boolean checkforwhitelist(String vartocheck) {
 		List<String> whitelist = plugin.getConfig().getStringList(
 				"mobwhitelist");
@@ -47,29 +44,27 @@ public class killlistener implements Listener {
 		String pickedup = plugin.getConfig().getString("Message.pickedup");
 		if (event.getDamager() == p) {
 			if (checkforwhitelist(event.getEntityType().toString())) {
-				
+
 				String username = p.getDisplayName();
 				String entitytype = event.getEntityType().toString();
-				
-				
+
 				// event.setDamage(0);
 				event.setCancelled(true);
 
-				
-				
 				if (event.getEntityType() == EntityType.HORSE) {
 					Horse horseentity = (Horse) event.getEntity();
-					
+
 					String color = horseentity.getColor().toString();
 					String style = horseentity.getStyle().toString();
 					String variant = horseentity.getVariant().toString();
-					
-					
+
 					if (newuser) {
-						sqlitehandler.setnewhorse(username, entitytype, color, style, variant);
+						sqlitehandler.setnewhorse(username, entitytype, color,
+								style, variant);
 						p.sendMessage(ChatColor.GREEN + pickedup);
 					} else {
-						sqlitehandler.updatehorse(username, entitytype, color, style, variant);
+						sqlitehandler.updatehorse(username, entitytype, color,
+								style, variant);
 						p.sendMessage(ChatColor.GREEN + pickedup);
 					}
 
