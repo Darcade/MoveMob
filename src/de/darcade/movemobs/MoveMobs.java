@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class movemobs extends JavaPlugin {
+public class MoveMobs extends JavaPlugin {
 
 	static String databasedir;
 	// String databasedir = "jdbc:sqlite:plugins/MoveMobs/database.sqlite";
