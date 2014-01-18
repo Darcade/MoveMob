@@ -37,10 +37,16 @@ public class MoveMobs extends JavaPlugin {
 		databasedir = "jdbc:sqlite:"
 				+ this.getDataFolder().getAbsolutePath().toString()
 				+ "/database.sqlite";
+		//System.out.println(databasedir);
 		sqlitehandler = new SQLitehandler(databasedir);
 		sqlitehandler.init();
 
-		this.createConfig();
+		
+		//Check config
+		this.saveDefaultConfig();
+		System.out.println("[MoveMobs] checking config...");
+		
+		
 		PluginDescriptionFile descFile = this.getDescription();
 		System.out.println("[MoveMobs] plugin enabled!");
 		System.out.println("Plugin Version: " + descFile.getVersion());
@@ -101,7 +107,8 @@ public class MoveMobs extends JavaPlugin {
 
 								if (playershorse.length == 0)
 									p.sendMessage("FAIL");
-
+								
+								
 								// playershorse.teleport(p.getLocation());
 								Horse spawnedhorse = (Horse) p.getWorld()
 										.spawnEntity(p.getLocation(),
@@ -128,10 +135,5 @@ public class MoveMobs extends JavaPlugin {
 		}
 
 		return true;
-	}
-
-	private void createConfig() {
-		this.saveDefaultConfig();
-		System.out.println("[MoveMobs] checking config...");
 	}
 }

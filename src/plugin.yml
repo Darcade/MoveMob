@@ -1,6 +1,6 @@
 name: MoveMobs
 version: 1.0
-main: de.darcade.movemobs.movemobs
+main: de.darcade.movemobs.MoveMobs
 author: Darcade
 website: http://darcade.de/
 commands:

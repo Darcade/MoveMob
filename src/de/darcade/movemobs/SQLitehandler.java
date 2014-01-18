@@ -5,14 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
-public class SQLitehandler extends JavaPlugin {
+public class SQLitehandler {
 
 	private String databasedir;
 
 	public SQLitehandler(String databasedir) {
 		this.databasedir = databasedir;
+		//System.out.println(databasedir);
 	}
 
 	public void init() {
