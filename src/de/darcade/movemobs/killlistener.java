@@ -61,7 +61,7 @@ public class killlistener implements Listener {
 					if (newuser) {
 						sqlitehandler.setnewhorse(username, entitytype, color,
 								style, variant);
-						new EntityManager(plugin).saveEntity(event.getEntity(), p.getDisplayName());
+						//new EntityManager(plugin).saveEntity(event.getEntity(), p.getDisplayName());
 						p.sendMessage(ChatColor.GREEN + pickedup);
 					} else {
 						sqlitehandler.updatehorse(username, entitytype, color,
